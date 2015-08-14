@@ -18,6 +18,8 @@
     of Python.
 """
 
+## -------------------- 0. Imports and general functions  -------------------
+
 import matplotlib.pyplot as plt
 from matplotlib import cm
 from mpl_toolkits.mplot3d import Axes3D
@@ -25,6 +27,12 @@ from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
 
 from scipy import misc
+
+# Function to display an image
+def plot_image(image, title):
+    plt.figure()
+    plt.imshow(image)
+    plt.title(title)
 
 ## -------------------- 1. Image acquisition  -------------------
 
@@ -36,11 +44,10 @@ height, width = rice.shape
 ## -------------------- 2. Image display  -------------------
 
 # Display the png image
-plt.figure(1)
-plt.imshow(rice)
-plt.title('Image in PNG')
+plot_image(rice, 'Image in PNG')
 
 # Display the 3D representation of the image (position and grey value)
+# The level of grey are represented by temperature colors
 fig = plt.figure(2)
 ax = fig.gca(projection='3d')
 X = np.arange(0, height, 1)
@@ -62,6 +69,7 @@ def freq_grey_level(image, number_of_grey):
             freq[image[i][j]] += 1
     return freq
 
+# Little function to display automatically the graph grey value/frequency
 def display_grey_freq(image):
     num_grey = 256
     grey_level = range(num_grey)
@@ -73,11 +81,14 @@ def display_grey_freq(image):
     plt.ylabel('Frequency')
     plt.title('Frequency of grey level')
 
+# Actually displaying the graph
 display_grey_freq(rice)
 
 ## -------------------- 4. Segmentation using a global  -------------------
 ## --------------------    threshold                    -------------------
 
+# Function that transform the original image in a black and white image
+# according to a predefinite threshold
 def threshold_image(image, threshold):
     image_thresholded = np.copy(image)
     for i in range(image.shape[0]):
@@ -85,14 +96,11 @@ def threshold_image(image, threshold):
             image_thresholded[i][j] = 0 if image[i][j] < threshold else 255
     return image_thresholded
 
+# Trying on three different values of threshold (according to the graph
+# obtained in 3.)
 rice_thresholded_128 = threshold_image(rice, 128)
 rice_thresholded_150 = threshold_image(rice, 150)
 rice_thresholded_70 = threshold_image(rice, 70)
-
-def plot_image(image, title):
-    plt.figure()
-    plt.imshow(image)
-    plt.title(title)
 
 plot_image(rice_thresholded_128, 'Image with a threshold of 128')
 plot_image(rice_thresholded_150, 'Image with a threshold of 150')
@@ -111,16 +119,17 @@ def background_elimination(image):
 
 rice_bg_eliminated = background_elimination(rice)
 
-plt.figure()
-plt.imshow(rice_bg_eliminated)
-plt.title('Background elimination')
+plot_image(rice_bg_eliminated, 'Background elimination')
 
 
 ## -------------------- 6. Segmentation of new image  -------------------
 
+# Following the same steps as in 3. and 4.
 display_grey_freq(rice_bg_eliminated)
+# Graph shows a limit around 55 so we use this value as a threshold
 rice_bg_eliminated_thresholded = threshold_image(rice_bg_eliminated, 55)
 plot_image(rice_bg_eliminated_thresholded, 'Image newly thresholded')
+
 
 # Display all the different figures
 plt.show()
