@@ -49,6 +49,7 @@ def plot(image, title="", threshold=256):
 
 def draw_circle(fig, center, radius, color='red'):
     """Add a circle to current figure."""
+
     circle = plt.Circle(center, radius, fill=False, color=color)
     fig.gca().add_artist(circle)
 
@@ -66,7 +67,6 @@ def display_monochrome_3D(image):
     X, Y = np.meshgrid(X, Y)
     surf = ax.plot_surface(X, Y, image, cmap=cm.coolwarm, linewidth=0)
     plt.title('3D representation of image')
-
 
 def freq(image, nb_of_level=256, title='', xlabel='Level'):
     """Display the historiogram frequency/value."""
