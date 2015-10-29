@@ -31,7 +31,7 @@ B = img[:,:,2]
 plt.imshow(img)
 
 plt.gray()
-segments = slic(img, n_segments=2, sigma=20)
+segments = slic(img, n_segments=1000, sigma=20)
 img_marked = mark_boundaries(img, segments)
 edges = canny(fct.normalize(segments))
 edges = dilation(edges, disk(5))

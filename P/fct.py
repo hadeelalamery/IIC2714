@@ -58,7 +58,7 @@ def freq(image, nb_of_level=256, title='', xlabel='Level', cumulative=False):
 
 ## -------------------- Transformation of image  -------------------
 
-def threshold(image, threshold):
+def threshold(image, threshold, threshold_begin=0):
     """Returns a new numpy array which is a thresholded version of the given 
     one.
 
@@ -69,8 +69,8 @@ def threshold(image, threshold):
     """
 
     image_thresholded = np.copy(image)
-    image_thresholded[image_thresholded < threshold] = 0
-    image_thresholded[image_thresholded >= threshold] = 255
+    image_thresholded[:,:] = 0
+    image_thresholded[(threshold_begin < image) & (image < threshold)] = 255
     return image_thresholded
 
 def normalize(img):
