@@ -16,10 +16,11 @@
     /!\ with these versions of the libraries ! I give no garanty if you use
     /!\ a different set up.
 
-    If you encounter an issue, please send me a mail to report it.
-
-    NOTE : the use of a class to keep every image action together would improve
-    the overall quality of this program.
+    NOTE : I wrote this when beginning to learn about image processing and the 
+    above mentionned libraries. Thus, you should not expect the overall quality
+    of the code to be great. If you wish to improve the code, feel free to send
+    a pull request and I will add it !
+    
 """
 
 import matplotlib.pyplot as plt
